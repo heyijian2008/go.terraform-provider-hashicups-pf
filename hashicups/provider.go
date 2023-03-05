@@ -168,12 +168,7 @@ func (p *hashicupsProvider) Configure(ctx context.Context, req provider.Configur
 	ctx = tflog.SetField(ctx, "hashicups_password", password)
 	ctx = tflog.MaskFieldValuesWithFieldKeys(ctx, "hashicups_password")
 
-
 	tflog.Debug(ctx, "Creating HashiCups client")
-
-	// Create a new HashiCups client using the configuration values
-	client, err := hashicups.NewClient(&host, &username, &password)
-	/* ... */
 
 	// Create a new HashiCups client using the configuration values
 	client, err := hashicups.NewClient(&host, &username, &password)
@@ -195,8 +190,6 @@ func (p *hashicupsProvider) Configure(ctx context.Context, req provider.Configur
 	tflog.Info(ctx, "Configured HashiCups client", map[string]any{"success": true})
 }
 
-}
-
 // DataSources defines the data sources implemented in the provider.
 func (p *hashicupsProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	//return nil
@@ -208,5 +201,10 @@ func (p *hashicupsProvider) DataSources(_ context.Context) []func() datasource.D
 
 // Resources defines the resources implemented in the provider.
 func (p *hashicupsProvider) Resources(_ context.Context) []func() resource.Resource {
-	return nil
+	//return nil
+
+	return []func() resource.Resource{
+		NewOrderResource,
+	}
+
 }
